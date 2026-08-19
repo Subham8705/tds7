@@ -1,4 +1,4 @@
-name: TDS GA7 Release Gate
+name: "TDS GA7 Release Gate"
 
 on:
   push:
@@ -18,19 +18,19 @@ jobs:
       matrix:
         node: [20, 22]
     steps:
-      - name: TDS identity: 24f2000610@ds.study.iitm.ac.in
-        run: echo "TDS identity: 24f2000610@ds.study.iitm.ac.in"
-
-      - name: Checkout
+      - name: "Checkout"
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: "Setup Node"
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install dependencies
+      - name: "TDS identity: 24f2000610@ds.study.iitm.ac.in"
+        run: echo "TDS identity: 24f2000610@ds.study.iitm.ac.in"
+
+      - name: "Install dependencies"
         run: npm install
 
-      - name: Run release-gate tests
+      - name: "Run release-gate tests"
         run: npm test
