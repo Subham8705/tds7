@@ -8,12 +8,24 @@ on:
 jobs:
   test-release-gate:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ["20", "22"]
     steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "Setup Node"
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
       - name: "TDS identity: 24f2000610@ds.study.iitm.ac.in"
         run: echo "TDS identity: 24f2000610@ds.study.iitm.ac.in"
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm install
-      - run: npm test
+
+      - name: "Install dependencies"
+        run: npm install
+
+      - name: "Run release-gate tests"
+        run: npm test
